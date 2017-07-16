@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+   <meta charset="utf-8">
+   <title>exam</title>
+   <link rel="stylesheet" href="common.css" />
+   <script src="http://code.jquery.com/jquery-latest.js"></script>
+   <script>
+
+      $(function(){
+
+         var exam1 = 0;
+
+         while(exam1 < 5){
+            exam1++;
+
+            $('.exam_wrap').eq(0).find('.exam_q').append('<input type="text">');
+
+         }
+
+
+         var i;
+
+         var startNum = 1;
+         var endNum = 5;
+
+         for (i = startNum; i<=endNum; i++){
+            if (i % 2 == 0){
+               $('.exam_wrap').eq(1).find('.exam_q').append('<input type="text">');
+            }else{
+               $('.exam_wrap').eq(1).find('.exam_q').append('<input type="checkbox">');
+            }
+         }
+
+
+
+         var dan8 = "";
+
+         for (var i=1; i<=9; i++){
+            dan8 += (" 8 * " + i  +"&nbsp;"+ "=" +"&nbsp;"+ 8 * i + "<br/>");
+         };
+
+         $('.exam_wrap').eq(2).find('.exam_q').append(dan8);
+
+         var guguDan = "";
+
+         for(var i=2; i<10;i++)
+         {
+            guguDan += "<div class='examq02'>";
+            for(var j=1; j<10; j++)
+            {
+
+               guguDan += (i + "*" + j + "=" + (i*j) + "<br/>");
+
+            }
+            guguDan += "</div>";
+         }
+
+         $('.exam_wrap').eq(3).find('.exam_q').append(guguDan);
+
+         var i=2; j=1;
+         var guguNumber = ""; 
+
+         while(i<10) {
+            guguNumber += "<div class='examq02'>";
+            j=1;
+
+            while(j<10){
+            guguNumber += (i + "*" + j + "=" + (i*j) + "<br>");            
+               j++;
+            }guguNumber += "</div>";
+            i++;      
+         }
+         $('.exam_wrap').eq(4).find('.exam_q').append(guguNumber);       
+      });
+
+   </script>
+   <style type="text/css">
+      .examq02{float:left;margin-right:10px}
+      .exam_q:after{display:block;clear:both;content:''}
+
+   </style>
+</head>
+<body>
+   <!-- wrapper [s] -->
+   <div id="wrapper">
+      <!-- header [s] -->
+      <div id="header">
+      </div>
+      <!-- header [e] -->
+      <hr />
+      <!-- container [s] -->
+      <div id="container">
+         <div class="exam_wrap">
+            <h1>Q. while 문으로 5개의 input 을 출력하세요.</h1>
+            <div class="exam_q">
+
+            </div>
+         </div>
+         <div class="exam_wrap">
+            <h1>Q. for 문으로 5개의 input 을 만들되, 짝수는 text / 홀수는 checkbox 를 출력하세요.</h1>
+            <div class="exam_q">
+            </div>
+         </div>
+         <div class="exam_wrap">
+            <h1>Q. for 문으로 구구단 8단을 출력하세요.</h1>
+            <div class="exam_q">
+            </div>
+         </div>
+         <div class="exam_wrap">
+            <h1>Q. for/while 문 2개로 구구단을 출력하세요. * for문</h1>
+            <div class="exam_q">
+            </div>
+         </div>
+         <div class="exam_wrap">
+            <h1>Q. for/while 문 2개로 구구단을 출력하세요. * while문</h1>
+            <div class="exam_q">
+            </div>
+         </div>
+      </div>
+      <!-- container [e] -->
+      <hr />
+      <!-- footer [s] -->
+      <div id="footer">
+      </div>
+      <!-- footer [e] -->
+   </div>
+   <!-- wrapper [e] -->
+</body>
+</html>
