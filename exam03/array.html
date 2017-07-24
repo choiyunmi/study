@@ -1,97 +1,200 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
 	<meta charset="utf-8">
 	<title>exam</title>
-	<link rel="stylesheet" href="common.css" />
 	<script src="https://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
-
-		var randomLength = 10;
-		var objNames3 = new Array();
-		for (i = 0; i < 10; i++) {
-			objNames3.push(i);
-		}
-		$('.exam_wrap').on('click', 'button', function() {
-			var examIdx = $(this).closest('.exam_wrap').index();
-
-			if (examIdx === 0) {
-				var arr = ["choi", "yun", "mi"];
-				console.log(arr.join(" "));
-			}else if (examIdx === 1) {
-				var str = 'question';
-				var aStr = str.split("");
-				var resultStr = '';
-				for (var i = aStr.length - 1; i >= 0; i--) {
-					resultStr += aStr[i];
+		$(function() {
+			var exam01 = {
+				default: ["choi", "yun", "mi"],
+				init: function() {
+					this.$btn = $('.exam_wrap button').eq(0);
+					this.bindEvent();
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						console.log(exam01.default.join(" "));
+					});
 				}
-				console.log(resultStr);
-			}else if (examIdx === 2) {
-				var numA = [40, 100, 1, 5, 25, 10];
-
-				numA.sort(function(a, b) {
-					return b - a
-				});
-
-				console.log(numA);
-			}else if (examIdx === 3) {
-				var guguDan = [];
-				var idx = 0;
-
-				for (i = 2; i <= 9; i++) {
-					guguDan[idx] = new Array();
-
-					for (j = 1; j <= 9; j++) {
-						guguDan[idx].push(i * j);
-
-					}
-					idx++;
-				}
-				console.log(guguDan);
-			}else if (examIdx === 4) {
-				var objNames = new Array();
-				for (i = 0; i < 10; i++) {
-					objNames.push(i);
-
-				}
-				console.log(objNames);
-			}else if (examIdx === 5) {
-				var objNames2 = new Array();
-				for (i = 0; i < 6; i++) {
-					var result = Math.floor(Math.random() * 5);
-					objNames2.push(result);
-				}
-				console.log(objNames2);
-			}else if (examIdx === 6) {
-				var result = Math.floor(Math.random() * randomLength);
-
-				if(randomLength >= 0){
-					objNames3.splice(result,1);
-				}
-				randomLength --;
-
-				console.log(objNames3)
-
-			}else{
-				var array = new Array();
-				function randomRange(n1, n2) {
-					return Math.floor( (Math.random() * (n2 - n1 + 1)) + n1 );
-				}
-
-				a = 0;
-				while(a < 6){
-					var randomNum = randomRange(0,5);
-					if( $.inArray(randomNum, array) == -1){
-						array.push(randomNum);
-						a++;
-					}
-
-				}
-				console.log(array);
 			}
+
+
+			var exam02 = {
+				default: 'question',
+				init: function() {
+					this.$btn = $('.exam_wrap button').eq(1);
+					this.aStr = this.default.split("");
+					this.resultStr = '';
+					this.bindEvent();
+				},
+				exam: function() {
+					for (var i = this.aStr.length - 1; i >= 0; i--) {
+						this.resultStr += this.aStr[i];
+					}
+					console.log(this.resultStr);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam02.exam();
+					});
+				}
+			}
+
+			var exam03 = {
+				default: [40, 100, 1, 5, 25, 10],
+				init: function() {
+					this.$btn = $('.exam_wrap button').eq(2);
+					this.bindEvent();
+				},
+				exam: function() {
+					this.default.sort(function(a, b) {
+						return b - a
+					});
+
+					console.log(this.default);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam03.exam();
+					});
+				}
+			}
+			var exam04 = {
+				init: function() {
+					this.guguDan = [];
+					this.idx = 0;
+					this.$btn = $('.exam_wrap button').eq(3);
+					this.bindEvent();
+				},
+				exam: function() {
+					for (i = 2; i <= 9; i++) {
+						this.guguDan[this.idx] = new Array();
+
+						for (j = 1; j <= 9; j++) {
+							this.guguDan[this.idx].push(i * j);
+						}
+						this.idx++;
+					}
+					console.log(this.guguDan);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam04.exam();
+					});
+				}
+			}
+
+			var exam05 = {
+				init: function() {
+					this.objNames = new Array();
+					this.$btn = $('.exam_wrap button').eq(4);
+					this.bindEvent();
+				},
+				exam: function() {
+					for (i = 0; i < 10; i++) {
+						this.objNames.push(i);
+					}
+					console.log(this.objNames);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam05.exam();
+					});
+				}
+			}
+
+			var exam06 = {
+				init: function() {
+					this.objNames = new Array();
+					this.result = '';
+					this.$btn = $('.exam_wrap button').eq(5);
+					this.bindEvent();
+				},
+				exam: function() {
+					for (i = 0; i < 6; i++) {
+						this.result = Math.floor(Math.random() * 5);
+						this.objNames.push(this.result);
+					}
+					console.log(this.objNames);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam06.exam();
+					});
+				}
+			}
+
+
+			var exam07 = {
+				init: function() {
+					this.objNames = new Array();
+					for (i = 0; i < 10; i++) {
+						this.objNames.push(i);
+					}
+					this.result = '';
+					this.randomLength = this.objNames.length;
+					this.$btn = $('.exam_wrap button').eq(6);
+					this.bindEvent();
+				},
+				exam: function() {
+					this.result = Math.floor(Math.random() * this.randomLength);
+					if (this.randomLength >= 0) {
+						console.log(this.objNames);
+						this.objNames.splice(this.result, 1);
+					}
+					this.randomLength--;
+
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam07.exam();
+					});
+				}
+			}
+
+			var exam08 = {
+				init: function() {
+					this.array = new Array();
+					this.aCnt = 0;
+					this.$btn = $('.exam_wrap button').eq(7);
+					this.bindEvent();
+				},
+				exam: function() {
+					function randomRange(n1, n2) {
+						return Math.floor((Math.random() * (n2 - n1 + 1)) + n1);
+					}
+					while (this.aCnt < 6) {
+						this.randomNum = randomRange(0, 5);
+						if ($.inArray(this.randomNum, this.array) == -1) {
+							this.array.push(this.randomNum);
+							this.aCnt++;
+						}
+
+					}
+					console.log(this.array);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam08.exam();
+					});
+				}
+			}
+
+
+			exam01.init();
+			exam02.init();
+			exam03.init();
+			exam04.init();
+			exam05.init();
+			exam06.init();
+			exam07.init();
+			exam08.init();
 		});
 	</script>
 </head>
+
 <body>
 	<!-- wrapper [s] -->
 	<div id="wrapper">
