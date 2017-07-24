@@ -43,24 +43,26 @@
 			}
 
 			var exam03 = {
-				default: [40, 100, 1, 5, 25, 10],
-				init: function() {
-					this.$btn = $('.exam_wrap button').eq(2);
-					this.bindEvent();
-				},
-				exam: function() {
-					this.default.sort(function(a, b) {
-						return b - a
-					});
+			default: [40, 100, 1, 5, 25, 10],
+			init: function() {
+				this.sortMax = {};
+				this.$btn = $('.exam_wrap button').eq(2);
+				this.bindEvent();
+			},
+			exam: function() {
+				this.newArr = this.default.slice();
+				this.sortMax = this.default.slice();
+				this.sortMax.sort(function(a, b) {
+					return b - a
+				});
 
-					console.log(this.default);
-				},
-				bindEvent: function() {
-					this.$btn.on('click', function() {
-						exam03.exam();
-					});
+				for (i = 0; i < this.sortMax.length; i++) {
+					console.log()
+					this.sortMax.splice(i, 1, this.newArr.indexOf(this.sortMax[i]));
+
 				}
-			}
+				console.log(this.sortMax);
+			},
 			var exam04 = {
 				init: function() {
 					this.guguDan = [];
