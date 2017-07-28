@@ -1,104 +1,196 @@
-
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
 	<meta charset="utf-8">
 	<title>exam</title>
-	<link rel="stylesheet" href="common.css" />
 	<script src="https://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
-/*함수의 코드는 함수가 선언될때 실행 되는것이 아님 함수가 호출 될때, 실행되는 것입니다.
-함수 호출이 new 키워드가 앞에 나오게 되서 호출 되면, 생성자 호출입니다.
-이것은 새로은 함수를 생성하는 것처럼 보입니다. 그러나 새로운 객체를 생성한 것입니다.
-여기서 생성자가 의미하는 것은 new를 써서 인스턴스를 만들어서 쓰는 함수를 의미합니다.
-일반적인 함수는 new를 쓸수도 있고 안쓸수도 있지만 prototype으로 확장을 함으로써 new를 써서 
-사용하도록 하고 파스칼형태로 첫글자를 대문자로 써줌으로써 생성자함수라는 것을 나타내줍니다.
-new를 붙이지 않는것은 일반 함수 호출이라 합니다.
-참조 url http://palpit.tistory.com/411*/
-var obj = function () {
-	console.log(this);
-};
-obj();
-console.log(obj);
-console.log(new obj);
+		$(function() {
+			var exam01 = {
+				default: ["choi", "yun", "mi"],
+				init: function() {
+					this.$btn = $('.exam_wrap button').eq(0);
+					this.bindEvent();
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						console.log(exam01.default.join(" "));
+					});
+				}
+			}
+			var exam02 = {
+				default: 'question',
+				init: function() {
+					this.$btn = $('.exam_wrap button').eq(1);
+					this.aStr = this.default.split("");
+					this.resultStr = '';
+					this.bindEvent();
+				},
+				exam: function() {
+					for (var i = this.aStr.length - 1; i >= 0; i--) {
+						this.resultStr += this.aStr[i];
+					}
+					console.log(this.resultStr);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam02.exam();
+					});
+				}
+			}
+			var exam03 = {
+				default: [40, 100, 1, 5, 25, 10],
+				init: function() {
+					this.sortMax = {};
+					this.$btn = $('.exam_wrap button').eq(2);
+					this.bindEvent();
+				},
+				exam: function() {
+					this.defaultArr = this.default.slice();
+					this.sortMax = this.default.slice();
+					this.sortMax.sort(function(a, b) {
+						return b - a
+					});
+					for (i = 0; i < this.sortMax.length; i++) {
+						console.log()
+						this.sortMax.splice(i, 1, this.defaultArr.indexOf(this.sortMax[i]));
+					}
+					console.log(this.sortMax);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam03.exam();
+					});
+				}
 
-//자바 스크립트에서 this라 불리는 것은 자기 자신을 뜻 하는 자바스크립트 코드이자 객체다.
-//객체 내에서 this 의 값은 객체 "자신" 이다.
-//함수 내에서 this의 값은 함수 "자신" 의 객체다.
-//객체 생성자에서 this키워드는 값을 가지지 않는다. 이것은 단지 새로운 객체를 대신하는 것이다. 생성자가 객체를 만들때,this의 값은 새로운 객체가 될것이다.
-//참조 url http://jdm.kr/blog/64
-var obj = { 
-	init : function () {
-		console.log(this);}
-	};
-	obj.init();
-
-
-	var obj = {
-		init : function () {
-      // setElements 함수를 호출해봐요~
-      this.setElements();
-  },
-  setElements : function () {
-  	console.log('call');
-  }
-};
-obj.init();
-
-
-
-var obj = {
-	init : function () {      
-		obj2.init();
-	}
-};
-var obj2 = {
-	init : function () {
-		console.log('call');
-	}
-};
-obj.init();
-
-
-var obj = {
-	func : function () {
-		console.log('func');
-	},
-	num : 3,
-	num2 : '최',
-	num3 : false
-};
-console.log(obj.func);
-console.log(obj.num);
-console.log(obj.num1);
-
-
-
-var obj = [
-'e','d','b','g','c','f','a'];
-
-console.log(obj.sort().join(''));
-
-
-
-var str = 'bcaebe';
-var oStr = str.split('').sort();
-var obj = {};
-for( var i=0; i<oStr.length; i++){
-	if (obj.hasOwnProperty(oStr[i])) {
-		obj[oStr[i] ] = obj[oStr[i] ]+1;
-	}else{
-		obj[oStr[i] ] = 1;
-	}
-}
-console.log(obj);
-</script>
+			};
+			var exam04 = {
+				init: function() {
+					this.guguDan = [];
+					this.idx = 0;
+					this.$btn = $('.exam_wrap button').eq(3);
+					this.bindEvent();
+				},
+				exam: function() {
+					for (i = 2; i <= 9; i++) {
+						this.guguDan[this.idx] = new Array();
+						for (j = 1; j <= 9; j++) {
+							this.guguDan[this.idx].push(i * j);
+						}
+						this.idx++;
+					}
+					console.log(this.guguDan);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam04.exam();
+					});
+				}
+			}
+			var exam05 = {
+				init: function() {
+					this.objNames = new Array();
+					this.$btn = $('.exam_wrap button').eq(4);
+					this.bindEvent();
+				},
+				exam: function() {
+					for (i = 0; i < 10; i++) {
+						this.objNames.push(i);
+					}
+					console.log(this.objNames);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam05.exam();
+					});
+				}
+			}
+			var exam06 = {
+				init: function() {
+					this.objNames = new Array();
+					this.result = '';
+					this.$btn = $('.exam_wrap button').eq(5);
+					this.bindEvent();
+				},
+				exam: function() {
+					for (i = 0; i < 6; i++) {
+						this.result = Math.floor(Math.random() * 5);
+						this.objNames.push(this.result);
+					}
+					console.log(this.objNames);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam06.exam();
+					});
+				}
+			}
+			var exam07 = {
+				init: function() {
+					this.objNames = new Array();
+					for (i = 0; i < 10; i++) {
+						this.objNames.push(i);
+					}
+					this.result = '';
+					this.randomLength = this.objNames.length;
+					this.$btn = $('.exam_wrap button').eq(6);
+					this.bindEvent();
+				},
+				exam: function() {
+					this.result = Math.floor(Math.random() * this.randomLength);
+					if (this.randomLength >= 0) {
+						console.log(this.objNames);
+						this.objNames.splice(this.result, 1);
+					}
+					this.randomLength--;
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam07.exam();
+					});
+				}
+			}
+			var exam08 = {
+				init: function() {
+					this.array = new Array();
+					this.aCnt = 0;
+					this.$btn = $('.exam_wrap button').eq(7);
+					this.bindEvent();
+				},
+				exam: function() {
+					function randomRange(n1, n2) {
+						return Math.floor((Math.random() * (n2 - n1 + 1)) + n1);
+					}
+					while (this.aCnt < 6) {
+						this.randomNum = randomRange(0, 5);
+						if ($.inArray(this.randomNum, this.array) == -1) {
+							this.array.push(this.randomNum);
+							this.aCnt++;
+						}
+					}
+					console.log(this.array);
+				},
+				bindEvent: function() {
+					this.$btn.on('click', function() {
+						exam08.exam();
+					});
+				}
+			}
+			exam01.init();
+			exam02.init();
+			exam03.init();
+			exam04.init();
+			exam05.init();
+			exam06.init();
+			exam07.init();
+			exam08.init();
+		});
+	</script>
 </head>
 <body>
 	<!-- wrapper [s] -->
 	<div id="wrapper">
-
-		
 		<!-- header [s] -->
 		<div id="header">
 		</div>
@@ -107,96 +199,53 @@ console.log(obj);
 		<!-- container [s] -->
 		<div id="container">
 			<div class="exam_wrap">
-				<h1>Q. 함수 호출시 new 를 붙인 것과 안 붙인 것의 차이를 설명하세요.</h1>
-				<div class="exam_q">예시)<br>
-					var obj = function () {<br>
-					&nbsp;&nbsp;&nbsp;console.log(this);<br>			
-				};<br>
-				obj();<br>
-				console.log(obj);
-				// new obj();
+				<h1>Q. 배열에 본인 이름을 한글자씩 담은 다음 문자열로 출력하세요.</h1>
+				<div class="exam_q">예시) ['Lee', 'Hwan'] => 'Lee Hwan'</div>
+				<button type="button">버튼</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 'question' 문자열을 거꾸로 출력하세요. (for문 사용)</h1>
+				<div class="exam_q">예시) 'question' => 'noitseuq'</div>
+				<button type="button">버튼</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. [40, 100, 1, 5, 25, 10] 에서 가장 큰 수 순서대로 index 를 배열로 출력하세요.  (for/if문 사용)</h1>
+				<div class="exam_q">예시) [40, 100, 1, 5, 25, 10] => [1, 0, 4, 5, 3, 2]</div>
+				<button type="button">버튼</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 2중 배열로 구구단을 만드세요. (for문 사용)</h1>
+				<div class="exam_q">예시) [[2,4,6...],[3,6,9...]...]</div>
+				<button type="button">버튼</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 배열에 숫자 0 ~ 9까지 담아보세요. (for문 사용)</h1>
+				<div class="exam_q">예시) [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</div>
+				<button type="button">버튼</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 배열에 숫자 0 ~ 5 사이의 랜덤한 숫자를 6개 담아보세요. (for문 사용)</h1>
+				<div class="exam_q">예시) [4, 2, 3, 2, 3, 0]</div>
+				<button type="button">버튼</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 배열에 숫자 0 ~ 9까지 담고, 버튼 클릭시 랜덤한 숫자를 하나씩 빼주세요.</h1>
+				<div class="exam_q">예시) [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] => [0, 1, 2, 3, 4, 5, 7, 8, 9] => [0, 1, 3, 4, 5, 7, 8, 9]</div>
+				<button type="button">버튼</button>
+			</div>
+			<div class="exam_wrap">
+				<h1>Q. 배열에 숫자 0 ~ 5 사이의 랜덤한 숫자를 중복되는 값이 없도록 6개 담아보세요. (for/if문 사용)</h1>
+				<div class="exam_q">예시) [4, 2, 3, 1, 5, 0]</div>
+				<button type="button">버튼</button>
 			</div>
 		</div>
-		<div class="exam_wrap">
-			<h1>Q. 객체 내에서의 this 를 설명하세요.</h1>
-			<div class="exam_q">예시)<br>
-				var obj = {<br>
-				&nbsp;&nbsp;&nbsp;init : function () {<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(this);<br>
-				&nbsp;&nbsp;&nbsp;}<br>
-			};<br>
-			obj.init();<br>
+		<!-- container [e] -->
+		<hr />
+		<!-- footer [s] -->
+		<div id="footer">
 		</div>
+		<!-- footer [e] -->
 	</div>
-	<div class="exam_wrap">
-		<h1>Q. 객체 내의 다른 메서드를 호출해보세요.</h1>
-		<div class="exam_q">예시)<br>
-			var obj = {<br>
-			&nbsp;&nbsp;&nbsp;init : function () {<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// setElements 함수를 호출해봐요~<br>
-			&nbsp;&nbsp;&nbsp;},<br>
-			&nbsp;&nbsp;&nbsp;setElements : function () {<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('call');<br>
-			&nbsp;&nbsp;&nbsp;}<br>
-		};<br>
-		obj.init();<br>
-	</div>
-</div>
-<div class="exam_wrap">
-	<h1>Q. 객체 내에서 다른 객체의 메서드를 호출해보세요.</h1>
-	<div class="exam_q">예시)<br>
-		var obj = {<br>
-		&nbsp;&nbsp;&nbsp;init : function () {<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 객체 obj2 의 init 을 호출해봐요~<br>
-		&nbsp;&nbsp;&nbsp;}<br>
-	};<br>
-	var obj2 = {<br>
-	&nbsp;&nbsp;&nbsp;init : function () {<br>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('call');<br>
-	&nbsp;&nbsp;&nbsp;}<br>
-};<br>
-obj.init();<br>
-</div>
-</div>
-<div class="exam_wrap">
-	<h1>Q. 데이터 타입들을 모두 넣은후, 값들을 출력해보세요.</h1>
-	<div class="exam_q">예시)<br>
-		var obj = {<br>
-		&nbsp;&nbsp;&nbsp;func : function () {<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('func');<br>
-		&nbsp;&nbsp;&nbsp;},<br>
-		&nbsp;&nbsp;&nbsp;num : 3,<br>
-		&nbsp;&nbsp;&nbsp;...<br>
-	};<br>
-	console.log(obj.func);<br>
-	console.log(obj.num);
-</div>
-</div>
-<div class="exam_wrap">
-	<h1>Q. 객체내의 모든 속성들의 값을 배열에 저장한후, abc 순으로 sorting 하여, 'abcdefg' 문자열로 출력해보세요.</h1>
-	<div class="exam_q">예시)<br>
-		var obj = {<br>
-		&nbsp;&nbsp;&nbsp;e : 'e',<br>
-		&nbsp;&nbsp;&nbsp;d : 'd',<br>
-		&nbsp;&nbsp;&nbsp;b : 'b',<br>
-		&nbsp;&nbsp;&nbsp;g : 'g',<br>
-		&nbsp;&nbsp;&nbsp;c : 'c',<br>
-		&nbsp;&nbsp;&nbsp;f : 'f',<br>
-		&nbsp;&nbsp;&nbsp;a : 'a'<br>
-	};<br>
-</div>
-</div>
-<div class="exam_wrap">
-	<h1>Q. 'bcaebe' 문자열을 hasOwnProperty 를 사용해서, {a : 1, b : 2, c : 1, e : 2} 로 변경해보세요.</h1>
-</div>
-</div>
-<!-- container [e] -->
-<hr />
-<!-- footer [s] -->
-<div id="footer">
-</div>
-<!-- footer [e] -->
-</div>
-<!-- wrapper [e] -->
+	<!-- wrapper [e] -->
 </body>
 </html>
