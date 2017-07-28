@@ -1,80 +1,80 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi">
-	<title>bear</title>
-	<link rel="stylesheet" type="text/css" href="css/coca.css">
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script>
-		$(document).ready(function() {
-			var game = {
-				config: {
-					isSuccess: true
-				},
-				init: function() {
-					this.$startBtn = $('.btn.btn_app');
-					this.$gameLane = $('.game_area > li');
-					this.$gomMedal = $(".sp.gom");
-					this.winDuration  = 500;
-					this.loseDuration = 900;
-					this.$startBtn.on('click', $.proxy(this._bindEvent, this));
-				},
-				_bindEvent: function(e) {
-					e.preventDefault();
-					this._scrollBody();
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi">
+<title>bear</title>
+<link rel="stylesheet" type="text/css" href="css/coca.css">
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
 
-				},
-				_scrollBody: function() {
-					$("html,body").stop().animate({
-						"scrollTop": 510
-					}, {
-						duration: 800,
-						complete:function(){
-							$.proxy(game._gameStart(), this);
-						}
-					});
-				},
-				_gameStart: function() {
-					this.chooseIdx = $(".rabx input:checked").closest('.rabx').index();
-					if(!this.config.isSuccess){
-						this._setFail();
-					}
-					this._setPlay();
-				},
-				_setFail:function(){
-					var arr = [];
-					for (var i = 0; i < this.$gameLane.length; i++) {
-						if (i !== this.chooseIdx) {
-							arr.push(i);
-						}
-					}
-					var randomNum = Math.floor(Math.random() * arr.length);
-					this.chooseIdx = arr[randomNum];
-				},
-				_setPlay:function(){
-					this.$gomMedal.eq(this.chooseIdx).stop().animate({
-							top: 98+"px"
-					}, {
-						duration:game.winDuration,
-						complete:function(){
-							game.$gameLane.eq(game.chooseIdx).addClass('winlane');
-						}
-					});
+	$(document).ready(function() {
+		var game = {
+			config: {
+				isSuccess: true
+			},
+			init: function() {
+				this.$startBtn = $('.btn.btn_app');
+				this.$gameLane = $('.game_area > li');
+				this.$gomMedal = $(".sp.gom");
+				this.winDuration  = 500;
+				this.loseDuration = 900;
+				this.$startBtn.on('click', $.proxy(this._bindEvent, this));
+			},
+			_bindEvent: function(e) {
+				e.preventDefault();
+				this._scrollBody();
 
-					this.$gomMedal.not(':eq('+this.chooseIdx+')').stop().animate({
-						top: 98+"px"
-					}, game.loseDuration);
+			},
+			_scrollBody: function() {
+				$("html,body").stop().animate({
+					"scrollTop": 510
+				}, {
+					duration: 800,
+					complete:function(){
+						$.proxy(game._gameStart(), this);
+					}
+				});
+			},
+			_gameStart: function() {
+				this.chooseIdx = $(".rabx input:checked").closest('.rabx').index();
+				if(!this.config.isSuccess){
+					this._setFail();
 				}
+				this._setPlay();
+			},
+			_setFail:function(){
+				var arr = [];
+				for (var i = 0; i < this.$gameLane.length; i++) {
+					if (i !== this.chooseIdx) {
+						arr.push(i);
+					}
+				}
+				var randomNum = Math.floor(Math.random() * arr.length);
+				this.chooseIdx = arr[randomNum];
+			},
+			_setPlay:function(){
+				this.$gomMedal.eq(this.chooseIdx).stop().animate({
+					top: 98+"px"
+				}, {
+					duration:game.winDuration,
+					complete:function(){
+						game.$gameLane.eq(game.chooseIdx).addClass('winlane');
+					}
+				});
 
-			};
-			game.init();
+				this.$gomMedal.not(':eq('+this.chooseIdx+')').stop().animate({
+					top: 98+"px"
+				}, game.loseDuration);
+			}
 
-		});
-	</script>
+		};
+		game.init();
+
+	});
+	
+</script>
 </head>
-
 <body>
 	<div class="evt_wrap">
 		<div class="evt_tit">
@@ -82,7 +82,6 @@
 				<h2 class="blind">1등 곰도 맞추고 100% 경품까지 폴라베어를 잡아라!</h2>
 			</div>
 		</div>
-
 		<div class="evt_ct">
 			<div class="evt_area">
 				<p class="blind">100% 당첨! 가장먼저 도착하는 폴라베어를 맞춰주세요</p>
@@ -103,7 +102,6 @@
 				<a href="#" class="btn btn_app">choice</a>
 			</div>
 		</div>
-
 		<div class="evt_ct2">
 			<ul class="game_area sp" id="gameLst">
 				<li class="lane">
@@ -117,10 +115,7 @@
 				</li>
 			</ul>
 		</div>
-
 		<div style="height:2000px"></div>
-
 	</div>
 </body>
-
 </html>
