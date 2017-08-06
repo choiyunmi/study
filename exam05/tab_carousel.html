@@ -20,7 +20,7 @@ button::-moz-focus-inner{padding:0;border:0}
 .cast_tab ul li a{display:block;padding:10px;border-left:1px solid #ccc;background:#f3f3f3;color:#000;text-decoration:none}
 .cast_tab ul li:first-child a{border-left:0 none}
 .cast_tab ul li.active a{background:#ccc;color:#000}
-.cast_cont{border-top:1px solid #ccc}
+.cast_cont{border-top:1px solid #ccc; height: 500px}
 .cast_article{display:none;height:500px}
 .cast_article.active{display:block}
 .cast_setting{padding:10px;border-top:1px solid #ccc;zoom:1}
@@ -130,7 +130,7 @@ button::-moz-focus-inner{padding:0;border:0}
 </div>
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 (function (win, $) {
     'use strict';
@@ -170,10 +170,10 @@ button::-moz-focus-inner{padding:0;border:0}
             $(this).siblings().removeClass('active');
             
             //탭 내용 
-            // oSelf.$tabCont.eq(oSelf.curIndex).addClass('active');
-            // oSelf.$tabCont.eq(oSelf.curIndex).siblings().removeClass('active');
-
-            oSelf.$tabCont.eq(oSelf.curIndex).fadeIn().siblings().fadeOut();
+            oSelf.$tabCont.eq(oSelf.curIndex).addClass('active');
+            oSelf.$tabCont.eq(oSelf.curIndex).siblings().removeClass('active');
+            oSelf.$tabCont.hide();
+            oSelf.$tabCont.eq(oSelf.curIndex).fadeIn();
 
             //네비게이션 값 설정
             oSelf.curNav.text(oSelf.curIndex+1) ;
@@ -217,6 +217,8 @@ button::-moz-focus-inner{padding:0;border:0}
             this.$btnNav.on('click', this.showNav); 
         },
          showPrev : function(){
+            this.orgIndex = this.curIndex;
+
             this.curIndex --;
 
             if(this.curIndex < 0){
@@ -227,6 +229,7 @@ button::-moz-focus-inner{padding:0;border:0}
         }, 
 
         showNext : function(){
+            this.orgIndex = this.curIndex;
             this.curIndex ++;
 
             if(this.curIndex > 7){
@@ -234,29 +237,57 @@ button::-moz-focus-inner{padding:0;border:0}
             };
             this.showThis();
         },
-        showNav:function(){
-            var oSelf = exam.View.yourCarousel.slideBox;
+        showNav:function(e){
+            e.preventDefault();
+            var oSelf = exam.View.yourCarousel.slideBox, type;
+            oSelf.orgIndex = oSelf.curIndex;
             oSelf.curIndex = $(this).index(); 
-            $.proxy(oSelf.showThis(), oSelf);
+            if(oSelf.orgIndex < oSelf.curIndex){
+                type = 'next';
+            }else{
+                type = 'prev';
+            }
+            
+            $.proxy(oSelf.showThis(type), oSelf);
         },
         showThis : function (type){    
+            if(this.curIndex  == this.orgIndex){
+                return;
+            }
             
-            //네비게이션      
+            //네비게이션 
+            if(type === 'prev'){
+                //이전 슬라이드 내용
+                this.$slideCont.eq(this.curIndex).css('left', '-100%');
+                this.$slideCont.eq(this.curIndex).show();
+                this.$slideCont.eq(this.orgIndex).stop().animate({
+                    left: '100%'
+                },function(){
+                    $(this).hide();
+                    $(this).css('left','');
+                });
+                this.$slideCont.eq(this.curIndex).stop().animate({
+                    left:  0
+                });
+            }else{
+                //다음 슬라이드 
+                console.log(this.curIndex,this.orgIndex)
+                this.$slideCont.eq(this.curIndex).css('left', '100%');
+                this.$slideCont.eq(this.curIndex).show();
+                this.$slideCont.eq(this.orgIndex).stop().animate({
+                    left: '-100%'
+                },function(){
+                    $(this).hide();
+                    $(this).css('left','');
+                });
+                this.$slideCont.eq(this.curIndex).stop().animate({
+                    left:  0
+                });
+            }    
             this.$btnNav.eq(this.curIndex).addClass('active');
             this.$btnNav.eq(this.curIndex).siblings().removeClass();
 
-            //슬라이드 내용
-            this.$slideCont.eq(this.curIndex).css('left', '-100%');
-            this.$slideCont.eq(this.curIndex).show();
-            this.$slideCont.eq(this.orgIndex).stop().animate({
-                left: '100%'
-            },function(){
-                $(this).hide();
-                $(this).css('left','');
-            });
-            this.$slideCont.eq(this.curIndex).stop().animate({
-                left:  0
-            });
+            
 
             // this.$slideCont.eq(this.curIndex).show();
             // this.$slideCont.eq(this.curIndex).siblings().hide(); 
