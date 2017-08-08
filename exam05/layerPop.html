@@ -54,7 +54,7 @@ button::-moz-focus-inner{padding:0;border:0}
 </div>
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 (function (win, $) {
     'use strict';
@@ -62,26 +62,32 @@ button::-moz-focus-inner{padding:0;border:0}
     exam.View = exam.View || {};
     exam.View.layerPop = {
         init : function () {
+            this.$target = "";        
+            this._setelement();
+            this._bindEvent();
+        },
+
+        _setelement : function () {
             this.$btnOpenPop = $('.btn_pos.js-btn_pos > button');
             this.$btnClosePop = $('.layer_close button');
             this.$layer = $('.layer_area');     
-            this.focusLayer = this.$layer.find('.layer_pos > ul > li').eq(0);          
-            this.$target = "";        
-            this._bindEvent();
-        },
-        _bindEvent: function() {
-            this.$btnOpenPop.on('click', this.openPop);            
-            this.$btnClosePop.on('click', $.proxy(this.closePop, this));
-        },
+            this.$focusLayer = this.$layer.find('.layer_pos');
+         },
 
-        openPop : function() {
-            exam.View.layerPop.$target = $(this);            
-            exam.View.layerPop.$layer.show(); 
-            exam.View.layerPop.focusLayer.attr('tabIndex',0).focus();              
+        _bindEvent: function() {
+           this.$btnOpenPop.on('click',$.proxy(this.openPop, this));      
+           this.$btnClosePop.on('click', $.proxy(this.closePop, this));
+        },        
+
+        openPop : function(e) {         
+            this.$target = $(e.currentTarget); 
+            console.log(this.$target);                   
+            this.$layer.show(); 
+            this.$focusLayer.attr('tabIndex',0).focus();              
         }, 
         closePop :function() {
             this.$layer.hide(); 
-            exam.View.layerPop.$target.focus();
+            this.$target.focus();
         }
 
     };
