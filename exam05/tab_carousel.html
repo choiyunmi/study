@@ -28,7 +28,6 @@ button::-moz-focus-inner{padding:0;border:0}
 .cast_setting .cast_btn{float:left}
 .cast_setting .cast_num{float:right;margin-right:5px}
 .cast_num .total{font-weight:bold}
-
 .slide_box{position:relative;width:880px;margin:0 auto}
 .slide_tab{position:absolute;left:0;bottom:0;right:0;z-index:30;padding:15px 0;font-size:0;line-height:0;text-align:center}
 .slide_tab ul{display:inline-block;vertical-align:top}
@@ -88,7 +87,7 @@ button::-moz-focus-inner{padding:0;border:0}
                 <div class="cast_btn">
                     <button type="button">이전</button><button type="button">다음</button>
                 </div>
-                <div class="cast_num"><span class="current">1</span> / <span class="total">8</span></div>
+                <div class="cast_num"><span class="current">1</span> / <span class="total"></span></div>
             </div>
         </div>
 
@@ -140,27 +139,38 @@ button::-moz-focus-inner{padding:0;border:0}
         init : function () {
             this.castBox.init();
             this.slideBox.init();
+            
         }
-
     };
-
     exam.View.yourCarousel.castBox={
         init:function(){
-            this.$tabLi = $('.cast_tab > ul > li');
-            this.tabLilength = $('.cast_tab > ul > li').length;
-            this.$btnPrev = $('.cast_setting').find('.cast_btn > button').eq(0);
-            this.$btnNext = $('.cast_setting').find('.cast_btn > button').eq(1); 
+            
             this.curIndex = 0;
+            this.$index = 0;
             this.$tabCont = $('.cast_cont>div');
             this.curNav = $('.cast_num').find('.current');
+            this._setElement();
             this._bindEvent();
+            this._initFunc();
+        },
+        _setElement:function(){
+            this.$tabLi = $('.cast_tab > ul > li');
+            this.$tabLilength = $('.cast_tab > ul > li').length;
+            this.$tabNum = $('.cast_num .total');
+            this.$btnPrev = $('.cast_setting').find('.cast_btn > button').eq(0);
+            this.$btnNext = $('.cast_setting').find('.cast_btn > button').eq(1); 
         },
         _bindEvent:function(){
-            this.$index = 0;
+            
             this.$tabLi.on('click', this.showCont);            
             this.$btnPrev.on('click', $.proxy(this.showPrev, this))  
             this.$btnNext.on('click', $.proxy(this.showNext, this))   
         },
+
+        _initFunc : function() {
+            this.$tabNum.text(this.$tabLilength);
+        },
+
         showCont : function(e) {    
             e.preventDefault();        
             var oSelf = exam.View.yourCarousel.castBox;
@@ -169,47 +179,42 @@ button::-moz-focus-inner{padding:0;border:0}
             $(this).addClass('active');
             $(this).siblings().removeClass('active');
             
-            //탭 내용             
-            //oSelf.$tabCont.eq(oSelf.curIndex).addClass('active'); 
-            //oSelf.$tabCont.eq(oSelf.curIndex).siblings().removeClass('active'); 
+            //탭 내용                         
             oSelf.$tabCont.hide();
             oSelf.$tabCont.eq(oSelf.curIndex).fadeIn();
-
             //네비게이션 값 설정
             oSelf.curNav.text(oSelf.curIndex+1) ;
         },
         showPrev : function(){
              this.curIndex--;  
              if(this.curIndex<0){
-                this.curIndex = this.tabLilength;
+                this.curIndex = this.$tabLilength;
              }  
             $('.cast_tab li').eq(this.curIndex).trigger('click');  
         }, 
-
         showNext : function(){
             this.curIndex++;    
             $('.cast_tab li').eq(this.curIndex).trigger('click');
-            if (this.curIndex > this.tabLilength ){
+            if (this.curIndex > this.$tabLilength ){
                this.curIndex = 0;
             }
             $('.cast_tab li').eq(this.curIndex).trigger('click');
         },
     };
-
     exam.View.yourCarousel.slideBox={
+        orgIndex : 0,
+        curIndex : 0,
         init:function(){
+            this._setElement();
+            this._bindEvent();      
+            this.$slideCont.hide();
+            this.$slideCont.eq(this.curIndex).show();
+        },
+        _setElement:function(){
             this.$btnPrev = $('.slide_setting').find('.slide_btn > button').eq(0);
             this.$btnNext = $('.slide_setting').find('.slide_btn > button').eq(1);        
             this.$btnNav = $('.slide_tab').find('ul > li'); 
             this.$slideCont = $('.slide_cont').find('.slide_article');
-            this.orgIndex = 0;
-            this.curIndex = 0; 
-            this._setElement();
-            this._bindEvent();      
-        },
-        _setElement:function(){
-          this.$slideCont.hide();
-          this.$slideCont.eq(this.curIndex).show();
         },
         _bindEvent:function(){
             this.$btnPrev.on('click', $.proxy(this.showPrev, this));  
@@ -218,20 +223,16 @@ button::-moz-focus-inner{padding:0;border:0}
         },
          showPrev : function(){
             this.orgIndex = this.curIndex;
-
             this.curIndex --;
-
             if(this.curIndex < 0){
                 this.curIndex = 7;
             };
             //컨텐츠 호출
             this.showThis('prev');            
         }, 
-
         showNext : function(){
             this.orgIndex = this.curIndex;
             this.curIndex ++;
-
             if(this.curIndex > 7){
                 this.curIndex = 0;
             };
@@ -284,13 +285,8 @@ button::-moz-focus-inner{padding:0;border:0}
                 });
             }    
             this.$btnNav.eq(this.curIndex).addClass('active');
-            this.$btnNav.eq(this.curIndex).siblings().removeClass();
-
+            this.$btnNav.eq(this.curIndex).siblings().removeClass();           
             
-
-            // this.$slideCont.eq(this.curIndex).show();
-            // this.$slideCont.eq(this.curIndex).siblings().hide(); 
-
         }
     }
     $(function () {
