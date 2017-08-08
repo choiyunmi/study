@@ -54,13 +54,21 @@ button::-moz-focus-inner{padding:0;border:0}
 </div>
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 (function (win, $) {
     'use strict';
     var exam = exam || {};
     exam.View = exam.View || {};
-    exam.View.layerPop = {
+    exam.View.layerPop = function (opts) {
+        var defParams = {
+                            layer : '.layer_area',
+                        };
+        this.opts = $.extend({}, defParams, opts);
+        this.init();
+        
+    };    
+    exam.View.layerPop.prototype = {
         init : function () {
             this.$target = "";        
             this._setelement();
@@ -68,9 +76,10 @@ button::-moz-focus-inner{padding:0;border:0}
         },
 
         _setelement : function () {
+            this.$layer = $(this.opts.layer); 
+
             this.$btnOpenPop = $('.btn_pos.js-btn_pos > button');
             this.$btnClosePop = $('.layer_close button');
-            this.$layer = $('.layer_area');     
             this.$focusLayer = this.$layer.find('.layer_pos');
          },
 
@@ -91,9 +100,8 @@ button::-moz-focus-inner{padding:0;border:0}
         }
 
     };
-    $(function () {
-        exam.View.layerPop.init();
-    });
+
+    var layerPop = new exam.View.layerPop();
 })(window, window.jQuery);
 </script>
 </body>
