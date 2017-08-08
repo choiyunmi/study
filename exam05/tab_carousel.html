@@ -271,7 +271,6 @@ button::-moz-focus-inner{padding:0;border:0}
                 });
             }else{
                 //다음 슬라이드 
-                console.log(this.curIndex,this.orgIndex)
                 this.$slideCont.eq(this.curIndex).css('left', '100%');
                 this.$slideCont.eq(this.curIndex).show();
                 this.$slideCont.eq(this.orgIndex).stop().animate({
