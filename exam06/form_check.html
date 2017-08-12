@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,7 +20,7 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
 .box1{position:relative}
 .box1 label{position:relative;padding-left:44px;font-size:16px;line-height:32px}
 .chk_area{display:inline-block;position:relative;font-size:0}
-.chk_box{display:inline-block;width:34px;height:34px;background:url(img/sp_check.png) no-repeat;background-position:0 0;vertical-align:middle}
+.chk_box{display:inline-block;width:34px;height:34px;background:url(https://telltrue33.github.io/study/exam10/img/sp_check.png) no-repeat;background-position:0 0;vertical-align:middle}
 .check_box{position:absolute;left:0;width:34px;height:34px}
 .ipt_chk,.ipt_rdo{position:absolute;width:1px;height:1px;opacity:0}
 .chk_active .chk_box{background-position:-36px 0}
@@ -38,7 +37,7 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
 .select_box.opened .select_menu:after{top:14px;border-top:0 solid transparent;border-bottom:5px solid red}
 .box2 label{position:relative;padding-left:28px;font-size:16px;line-height:18px}
 .radio_box{display:inline-block;position:relative;margin-right:10px}
-.rdo_box{position:absolute;left:0;width:18px;height:18px;margin-top:2px;background:url(img/sp_radio.png) no-repeat;background-position:0 0;vertical-align:middle}
+.rdo_box{position:absolute;left:0;width:18px;height:18px;margin-top:2px;background:url(https://telltrue33.github.io/study/exam10/img/sp_radio.png) no-repeat;background-position:0 0;vertical-align:middle}
 .chk_active .rdo_box{background-position:-20px 0}
 .ipt_rdo:checked + .rdo_box{background-position:-20px 0}
 /* //temporary css */
@@ -94,11 +93,80 @@ p{margin-bottom:30px;padding-bottom:10px;border-bottom:2px solid #da0707;font-si
     <!-- footer [e] -->
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="../js/libs/jquery-1.12.4.min.js"></script>
+<script src="https://telltrue33.github.io/study/js/libs/jquery-1.12.4.min.js"></script>
 <script>
 (function (win, $) {
     'use strict';
     $(function () {
+        var jsCheckBox = {
+            init:function(){
+                this.chk = $('.check_box');
+                this._bindEvent();
+            },
+            _bindEvent:function(){
+                this.chk.on('change', $.proxy(this.changeChk, this));
+            },
+            changeChk:function(e){
+                e.preventDefault();
+                $(e.target).parent().toggleClass('chk_active');
+
+                if($(e.target).hasClass('chk_active')){
+                    $(e.target).prop('checked', true);
+                }else{
+                    $(e.target).prop('checked', false);
+                }
+            }
+        };
+        $(function () {
+            jsCheckBox.init();
+        });
+
+        var jsRadio = {
+            init:function(){
+                this.$radio = $('.radio_box');
+                this._bindEvent();
+            },
+            _bindEvent:function(){
+                this.$radio.on('change', $.proxy(this.changeRadio, this));
+            },
+            changeRadio:function(e){
+                $(e.target).closest('.radio_box').addClass('chk_active');
+                $(e.target).closest('.radio_box').siblings().removeClass('chk_active');
+            }
+        };
+        $(function () {
+            jsRadio.init();
+        });
+
+
+        var jsSelectBox = {
+            init:function(){
+                this.$selectBox = $('.select_box > a');
+                this.$selectList = $('.select_box ul >li>a');
+                this._bindEvent();
+            },
+            _bindEvent: function(){
+                this.$selectBox.on('click', $.proxy(this.clickSelectBox, this));
+                this.$selectList.on('click', $.proxy(this.clickSelectList, this));
+
+            },
+            clickSelectBox: function(e){
+                e.preventDefault();
+                $(e.target).parent().toggleClass('opened');
+                $(e.target).siblings('ul').toggle();
+            },
+            clickSelectList:function(e){
+                e.preventDefault();
+                 var selctText = $(e.target).text();
+                this.$selectBox.text(selctText);
+
+                $(e.target).closest('.select_box').removeClass('opened');
+                $(e.target).closest('ul').hide();
+            }
+        };
+        $(function () {
+            jsSelectBox.init();
+        });
     });
 })(window, window.jQuery);
 </script>
