@@ -1,6 +1,6 @@
 # study## STUDY
 
-####[1차]
+#### [1차]
 selector jquery 버전
  * https://choiyunmi.github.io/study/exam01/selector_jquery.html
  * https://choiyunmi.github.io/study/exam01/selector2_jquery.html
