@@ -1,4 +1,4 @@
-# study## STUDY
+## STUDY
 
 #### [1차]
 selector jquery 버전
@@ -33,10 +33,15 @@ selector javascript 버전
 #### [7차] 
  * [exam14]  https://choiyunmi.github.io/study/exam07/exam14.html
 
-###팀원 코드 (벤치마킹 or 이해)
+### 팀원 코드 (벤치마킹 or 이해)
   송윤혜 : https://github.com/yunhyesong/study
+
   김하영 : https://github.com/hayoungkkim/study
+
   최민성 : https://github.com/zestairlove/std_jsHive
+
   홍주영 : https://github.com/Hongzoo/study/tree/gh-pages/JavaScript/se_ui
+
   박태영 : https://github.com/bluetpark/study
+
   최윤미 : https://github.com/choiyunmi/study
