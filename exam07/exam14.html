@@ -721,67 +721,76 @@ ins{text-decoration:none}
 <!-- <script src="../js/libs/jquery-1.12.4.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.2.1.js" ></script>
 <script>
-(function (win, $) {
-    'use strict';
-    $(function () {
+(function(win, $) {
+'use strict';
 
-        var TabMenu = {
+var exam = exam || {};
+exam.View = exam.View || {};
+exam.View.exam14 = exam.View.exam14 || {};
+exam.View.exam14= function(){
+    this.init();
+}
 
-         init:function(){
-            this.tabGroup = $('.tabGroup').find('li');
-            this.menuTop = $('.filter_sort_wrap').offset().top;
-            this._bindEvnt();                   
-            },
-        
-         _bindEvnt:function(){
-                this.tabGroup.on('click',$.proxy(this.changeFilter, this));                
-                $(window).on('scroll', $.proxy(this.scrollCalculator, this));
-                $('.btn_wishlist').on('click',$.proxy(this.btn_heart, this));                
-                $('.selt').on('click',$.proxy(this.btn_selt, this));                
-                $('.selt_lst').on('click',$.proxy(this.btn_selt02, this));                
-                this.scrollCalculator();            
-            },    
+exam.View.exam14.prototype = {
+    constructor: exam.View.exam14,
+    init: function() {
+        this.tabGroup = $('.tabGroup').find('li');
+        this.menuTop = $('.filter_sort_wrap').offset().top;
+        this._bindEvent();
+    },
 
-         changeFilter:function(e){
-             $(e.target).parent().siblings().removeClass('selected')
-             $(e.target).parent().addClass('selected');
-           },  
-         scrollCalculator:function(){
-                this.scrollTop = $(window).scrollTop();                
-               if(this.scrollTop>=this.menuTop){
-                  $( ".filter_sort_wrap" ).addClass( "sticky" );
-               }else{
-                  $( ".filter_sort_wrap" ).removeClass( "sticky" );
-               };
-           }, 
+    _bindEvent: function() {
+        this.tabGroup.on('click', $.proxy(this.changeFilter, this));
+        $(window).on('scroll', $.proxy(this.scrollCalculator, this));
+        $('.btn_wishlist').on('click', $.proxy(this.btn_heart, this));
+        $('.selt').on('click', $.proxy(this.btn_selt, this));
+        $('.selt_lst').on('click', $.proxy(this.btn_selt02, this));
+        this.scrollCalculator();
+    },
 
-        btn_heart:function(e){            
-            $(e.target).parent().toggleClass('on');                
-           },     
+    changeFilter: function(e) {
+        $(e.target).parent().siblings().removeClass('selected')
+        $(e.target).parent().addClass('selected');
+    },
 
-        btn_selt:function(e){          
-            e.preventDefault();  
-            $(e.target).toggleClass('open');                
-            $(e.target).siblings().toggle();
-            console.log($(e.target));          
-    
-        },
+    scrollCalculator: function() {
+        this.scrollTop = $(window).scrollTop();
+        if (this.scrollTop >= this.menuTop) {
+            $(".filter_sort_wrap").addClass("sticky");
+        } else {
+            $(".filter_sort_wrap").removeClass("sticky");
+        };
+    },
 
-        btn_selt02:function(e){          
-            e.preventDefault();  
-           var aa = $(e.target).text();            
-            $(e.target).closest('.selt_lst').css("display", "none");  
-            $(e.target).closest('.selt_lst').siblings('.selt').removeClass("open");  
-            console.log($(e.target));
+    btn_heart: function(e) {
+        $(e.target).parent().toggleClass('on');
+    },
 
-        },         
-            
-      };
-   $(function () {
-        TabMenu.init();
-    });    
-  });
+    btn_selt: function(e) {
+        e.preventDefault();
+        $(e.target).toggleClass('open');
+        $(e.target).siblings().toggle();
+        console.log($(e.target));
+
+    },
+
+    btn_selt02: function(e) {
+        e.preventDefault();
+        var aa = $(e.target).text();
+        $(e.target).closest('.selt_lst').css("display", "none");
+        $(e.target).closest('.selt_lst').siblings('.selt').removeClass("open");
+        console.log($(e.target));
+
+    }
+
+};
+
+$(function() {
+    var exam14 = new exam.View.exam14();
+});
+
 })(window, window.jQuery);
+
 </script>
 </div>
 </body>
