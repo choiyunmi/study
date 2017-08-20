@@ -8,18 +8,6 @@
 
 	
 		$(function() {
-			var exam01 ={
-				init:function(){
-					this.arr =  ["choi", "yun", "mi"];
-					this.$btn =  $('.exam_wrap button').eq(0);
-					this.bindEvent();
-				},
-				bindEvent:function(){
-
-					init.$btn.on('click', function(){
-						console.log( exam01.init.arr)
-
-		$(function() {
 			var exam01 = {
 				default: ["choi", "yun", "mi"],
 				init: function() {
@@ -192,11 +180,6 @@
 				}
 			}
 			exam01.init();			
-
-
-		});
-	
-
 			exam02.init();
 			exam03.init();
 			exam04.init();
@@ -204,8 +187,9 @@
 			exam06.init();
 			exam07.init();
 			exam08.init();
+
 		});
-	});
+		
 	</script>
 </head>
 <body>
