@@ -34,9 +34,7 @@ table{border-collapse:collapse;border-spacing:0}
 .realtime.pop{height:auto;overflow:visible;}
 </style>
 
-<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="./js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="./js/common.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 
 </head>
 <body>
@@ -66,6 +64,112 @@ table{border-collapse:collapse;border-spacing:0}
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-latest.js"></script>    
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        var COMMON = COMMON || {};
+
+        $(window).on('load', function() {
+            COMMON.init();
+        });
+
+        $(function(ns, $) {
+            /**
+             * 초기화
+             */
+            ns.init = function() {
+                new ns.realtimeKeyword();
+            };
+
+            ns.realtimeKeyword = ns.realtimeKeyword || {};
+            ns.realtimeKeyword = function() {
+                this.init();
+            };
+            ns.realtimeKeyword.prototype = {
+                constructor: ns.realtimeKeyword,
+                init: function() {
+                    this.$target = $('.realtime');
+                    this.$keywordWrap = this.$target.find('> ol');
+                    this.$keywordEl = this.$keywordWrap.find('li');
+                    this.curKeywordIdx = 0;
+                    this.rollingTimeId = 0;
+
+                    //키워드 롤링 효과를 위해 첫번째 키워드 복사해서 맨 마지막에 추가
+                    var $firstEl = this.$keywordEl.eq(0).clone();
+                    this.$keywordWrap.append($firstEl);
+
+
+                    this._bindEvent();
+                },
+                _bindEvent: function() {
+                    var oSelf = this;
+
+                    this.$keywordWrap.on('mouseenter', function() {
+                        //전체 키워드 항목 보이기
+                        oSelf.$target.css('height', 200);
+
+                        //현재 키워드 굵은 글자로  표시
+                        oSelf.$keywordEl.eq(oSelf.curKeywordIdx).addClass('on');
+
+                        // 롤링 효과를 위해 마지막 요소 추가 한 부분 삭제
+                        oSelf.$keywordWrap.find('li').last().hide();
+
+                        // 롤링 멈춤
+                        oSelf._stopRollingKeyword();
+                    });
+
+                    this.$keywordWrap.on('mouseleave', function() {
+                        //전체 키워드 항목 감추기
+                        oSelf.$target.css('height', 20);
+
+                        //해당 키워드 표시
+                        oSelf.$keywordEl.eq(oSelf.curKeywordIdx).removeClass('on');
+
+                        //롤링 효과를 위해 마지막 요소 추가
+                        oSelf.$keywordWrap.find('li').last().show();
+
+                        //스크롤 재 지정
+                        oSelf.$target.scrollTop( 20 * oSelf.curKeywordIdx);
+
+                        //롤링 재생 
+                        oSelf._startRollingKeyword();
+                    });
+
+                    this._startRollingKeyword();
+                },
+                //키워드 멈춤
+                _stopRollingKeyword: function() {
+                    var oSelf = this;
+                    if(this.rollingTimeId != 0){
+                        clearInterval(this.rollingTimeId);
+                        this.rollingTimeId = 0;
+                    }
+                },
+                //키워드 롤링
+                _startRollingKeyword: function() {
+                    var oSelf = this;
+                    if (this.rollingTimeId === 0) {
+                        this.rollingTimeId = setInterval(function() {
+
+                            //롤링 키워드
+                            oSelf._rolling();
+                        }, 1500);
+                    }
+                },
+                _rolling: function() {
+                    this.curKeywordIdx++;
+                    if(this.curKeywordIdx > 10){
+                        this.$target.scrollTop(0);
+                        this.curKeywordIdx = 1;
+                    }
+                    this.$target.animate({
+                        scrollTop: 20 * this.curKeywordIdx
+                    }, 500, 'swing');
+
+                }
+            };
+            return ns;
+        }(COMMON || (window.COMMON = {}), jQuery));
+
+    </script>
 </body>
 </html>
